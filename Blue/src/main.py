@@ -7,7 +7,7 @@ from utils import load_data
 
 
 def main():
-	print('\n---------- Offline Handwritten Chinese Character Recognizer ----------\n')
+	print('\n---------- Offline Handwritten Chinese Character Recognizer -----------\n')
 	print('Based on the convolutional neural network called Melnyk-Net.')
 	print('Recognizes 3755 Chinese character classes from GB2312-80 level-1.')
 	print('\nCopyright © 2018 Pavlo O. Melnyk\n\n')
