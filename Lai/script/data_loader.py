@@ -30,7 +30,8 @@ def loadimgs(path, train_prob, n=0):
             # add train val cut point
             image_path = os.path.join(word_path, filename)
             # resize every picture bcz those pictures dont have the same size
-            image = np.array(Image.open(image_path).resize((96, 96))) # .convert('1') to change gray
+            image = np.array(Image.open(image_path).resize(
+                (96, 96)))  # .convert('1') to change gray
             X_train.append(image)
             # calculate the length of the data
             count_y += 1
@@ -53,7 +54,8 @@ def loadimgs(path, train_prob, n=0):
         for filename in os.listdir(word_path):
             # add train val cut point
             image_path = os.path.join(word_path, filename)
-            image = np.array(Image.open(image_path).convert('1').resize((96, 96)))
+            image = np.array(Image.open(image_path).resize(
+                (96, 96)))  # .convert('1')
             X_val.append(image)
             count_y += 1
 
@@ -62,7 +64,10 @@ def loadimgs(path, train_prob, n=0):
         lang_dict_val[word][1] = count_y - 1
 
     X_train = np.stack(X_train)
-    X_val = np.stack(X_val)
+    if train_prob != 1:
+        X_val = np.stack(X_val)
+    else:
+        pass  # use all data into x_train
 
     return X_train, X_val, cat_dict_train, cat_dict_val, lang_dict_train, lang_dict_val
 
@@ -71,10 +76,10 @@ data_path = '../../../data_set/模型訓練資料/format_train/'
 save_path = '../../../data_set/模型訓練資料/save/'
 
 X_train, X_val, cat_dict_train, cat_dict_val, lang_dict_train, lang_dict_val = loadimgs(
-    data_path, 0.7)
+    data_path, 1)
 
 with open(os.path.join(save_path, "x_train.pickle"), "wb") as f:
     pickle.dump((X_train, cat_dict_train, lang_dict_train), f)
 
-with open(os.path.join(save_path, "x_val.pickle"), "wb") as f:
-    pickle.dump((X_val, cat_dict_val, lang_dict_val), f)
+# with open(os.path.join(save_path, "x_val.pickle"), "wb") as f:
+#     pickle.dump((X_val, cat_dict_val, lang_dict_val), f)
